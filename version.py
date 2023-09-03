@@ -1,3 +1,13 @@
+def read_version():
+    with open('version.txt', 'r') as file:
+        return file.read().strip()
+
+
+def write_version(updated_version):
+    with open('version.txt', 'w') as file:
+        file.write(updated_version)
+
+
 def increment_patch(version):
     major, minor, patch = version.split('.')
     patch = int(patch) + 1
@@ -5,7 +15,13 @@ def increment_patch(version):
 
 
 if __name__ == "__main__":
-    current_version = "1.0.0"
+    # Read the current version
+    current_version = read_version()
+    print("Current version:", current_version)
+
+    # Increment the patch version
     new_version = increment_patch(current_version)
-    with open("version.txt", "w") as f:
-        f.write(new_version)
+
+    # Write the new version
+    write_version(new_version)
+    print("New version:", new_version)
