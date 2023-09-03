@@ -1,0 +1,49 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Update Version
+        run: python version.py
+        # working-directory:
+
+      - name: Build application
+        run: |
+          pyinstaller --name DirectoryScanner app.py
+
+      - name: Commit Version Update
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add version.txt
+          git commit -m "Bump version to v${{ steps.create_release.outputs.new_version }}"
+          git push
+        # working-directory:
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/DirectoryScanner
+          tag_name: v${{ steps.create_release.outputs.new_version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
