@@ -48,7 +48,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/*
+          files: dist/DirectoryScanner
           # Get the version from the version.txt file
           tag_name: v${{ steps.create_release.outputs.new_version }}
         env:
