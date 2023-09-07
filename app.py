@@ -167,6 +167,12 @@ root = tk.Tk()
 root.title("Directory Scanner")
 root.geometry("650x400")  # Initial window size
 
+icon_path = os.path.join(os.path.dirname(__file__), 'app.ico')
+if os.path.exists(icon_path):
+    root.iconbitmap(icon_path)
+else:
+    print(f"Icon file not found: {icon_path}")
+
 # Create a StringVar to store the selected directory
 selected_directory = tk.StringVar()
 
