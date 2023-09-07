@@ -26,6 +26,21 @@ jobs:
         run: python version.py
         # working-directory:
 
+      - name: Read Version
+        id: get_version
+        run: echo ::set-output name=version::$(python version.py)
+
+      - name: Set Version Environment Variable
+        run: |
+          echo "VERSION_OLD=${{ steps.get_version.outputs.version }}"
+          echo "VERSION_OLD=${{ steps.get_version.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Set Version Environment Variable
+        id: set_version
+        run: |
+          echo "VERSION_NEW=$(python version.py)"
+          echo "VERSION_NEW=$(python version.py)" >> $GITHUB_ENV
+
       - name: Build application
         run: |
           pyinstaller --name DirectoryScanner app.py --onefile -w
@@ -49,7 +64,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: dist/DirectoryScanner.exe
-          # Get the version from the version.txt file
-          tag_name: v${{ steps.create_release.outputs.new_version }}
+          tag_name: v${{ env.VERSION_NEW }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
