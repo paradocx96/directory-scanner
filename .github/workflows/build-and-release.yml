@@ -25,8 +25,8 @@ jobs:
       - name: Update Version & Set Version Environment Variable
         id: set_version
         run: |
-          echo "VERSION=$(python version.py)"
           echo "VERSION=$(python version.py)" >> $GITHUB_ENV
+          echo "::set-env name=NEW_VERSION::${{ env.VERSION }}"
 
       - name: Build application
         run: |
@@ -51,6 +51,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: dist/DirectoryScanner.exe
-          tag_name: echo "v${{ env.VERSION }}"
+          tag_name: v$NEW_VERSION
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
