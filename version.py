@@ -17,11 +17,10 @@ def increment_patch(version):
 if __name__ == "__main__":
     # Read the current version
     current_version = read_version()
-    print("Current version:", current_version)
 
     # Increment the patch version
     new_version = increment_patch(current_version)
 
     # Write the new version
     write_version(new_version)
-    print("New version:", new_version)
+    print(new_version)

@@ -22,24 +22,11 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Update Version
-        run: python version.py
-        # working-directory:
-
-      - name: Read Version
-        id: get_version
-        run: echo ::set-output name=version::$(python version.py)
-
-      - name: Set Version Environment Variable
-        run: |
-          echo "VERSION_OLD=${{ steps.get_version.outputs.version }}"
-          echo "VERSION_OLD=${{ steps.get_version.outputs.version }}" >> $GITHUB_ENV
-
-      - name: Set Version Environment Variable
+      - name: Update Version & Set Version Environment Variable
         id: set_version
         run: |
-          echo "VERSION_NEW=$(python version.py)"
-          echo "VERSION_NEW=$(python version.py)" >> $GITHUB_ENV
+          echo "VERSION=$(python version.py)"
+          echo "VERSION=$(python version.py)" >> $GITHUB_ENV
 
       - name: Build application
         run: |
@@ -64,6 +51,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: dist/DirectoryScanner.exe
-          tag_name: v${{ env.VERSION_NEW }}
+          tag_name: v${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
