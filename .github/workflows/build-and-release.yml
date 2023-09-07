@@ -51,6 +51,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: dist/DirectoryScanner.exe
-          tag_name: v$(cat version.txt)
+          tag_name: echo "v${{ env.VERSION }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
