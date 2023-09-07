@@ -25,8 +25,7 @@ jobs:
       - name: Update Version & Set Version Environment Variable
         id: set_version
         run: |
-          echo "VERSION=$(python version.py)" >> $GITHUB_ENV
-          echo "::set-env name=NEW_VERSION::${{ env.VERSION }}"
+          echo "NEW_VERSION=$(python version.py)" >> $GITHUB_ENV
 
       - name: Build application
         run: |
