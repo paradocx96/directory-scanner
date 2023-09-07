@@ -42,15 +42,15 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           git add version.txt
-          git commit -m "Bump version to ${{ env.VERSION }}"
+          git commit -m "Bump version to $(cat version.txt)"
           git push
         # working-directory:
 
-      # - name: Create GitHub Release
-      #   id: create_release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: dist/DirectoryScanner.exe
-      #     tag_name: v${{ env.VERSION }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/DirectoryScanner.exe
+          tag_name: v$(cat version.txt)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
