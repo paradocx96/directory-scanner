@@ -52,4 +52,5 @@ jobs:
           files: dist/DirectoryScanner.exe
           tag_name: v$NEW_VERSION
         env:
+          NEW_VERSION: ${{ env.NEW_VERSION }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
