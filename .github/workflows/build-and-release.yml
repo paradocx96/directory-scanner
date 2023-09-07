@@ -28,11 +28,11 @@ jobs:
 
       - name: Build application
         run: |
-          pyinstaller --name DirectoryScanner app.py
+          pyinstaller --name DirectoryScanner app.py --onefile -w
 
       - name: Display DirectoryScanner
         run: |
-          cd dist/DirectoryScanner
+          cd dist
           ls -R
 
       - name: Commit Version Update
